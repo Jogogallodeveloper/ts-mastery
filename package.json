@@ -1,0 +1,17 @@
+{
+  "name": "ts-mastery",
+  "version": "1.0.0",
+  "description": "TypeScript advanced studies — generics, design patterns, clean architecture",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts",  
+    "build": "tsc",                         
+    "start": "node dist/index.js",          
+    "type-check": "tsc --noEmit" 
+  },
+  "devDependencies": {
+    "@types/node": "...",
+    "ts-node": "...",
+    "typescript": "..."
+  }
+}

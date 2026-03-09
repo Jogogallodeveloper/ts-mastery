@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    // --- Output ---
+    "target": "ES2020",           // Compila para ES2020 (suportado por Node 14+)
+    "module": "commonjs",         // Sistema de módulos do Node.js
+    "outDir": "./dist",           // Pasta onde o JS compilado vai parar
+    "rootDir": "./src",           // Pasta raiz dos seus arquivos .ts
+
+    // --- Strict Mode (o coração da config) ---
+    "strict": true,               // Ativa TODAS as flags de strict abaixo de uma vez
+    "noImplicitAny": true,        // Proíbe variáveis sem tipo definido (ex: function(x) → erro)
+    "strictNullChecks": true,     // null e undefined não são atribuíveis a outros tipos
+    "strictFunctionTypes": true,  // Checagem rigorosa de tipos em funções
+    "noImplicitReturns": true,    // Toda função deve ter return em todos os caminhos
+    "noUnusedLocals": true,       // Erro se declarar variável e não usar
+    "noUnusedParameters": true,   // Erro se declarar parâmetro e não usar
+
+    // --- Qualidade de código ---
+    "esModuleInterop": true,      // Permite imports no estilo ES6 de módulos CommonJS
+    "resolveJsonModule": true,    // Permite importar arquivos .json
+    "forceConsistentCasingInFileNames": true, // Evita bugs de case-sensitive entre SOs
+
+    // --- Source maps (para debug) ---
+    "sourceMap": true             // Gera .map files para debugar o TS original
+  },
+  "include": ["src/**/*"],        // Compila tudo dentro de /src
+  "exclude": ["node_modules", "dist"] // Ignora essas pastas
+}
