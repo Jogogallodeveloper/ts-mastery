@@ -23,6 +23,6 @@
     // --- Source maps (para debug) ---
     "sourceMap": true             // Gera .map files para debugar o TS original
   },
-  "include": ["src/**/*"],        // Compila tudo dentro de /src
+  "include": ["src/**/*"],        // Compila tudo dentro de /src  
   "exclude": ["node_modules", "dist"] // Ignora essas pastas
 }
