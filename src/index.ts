@@ -7,7 +7,6 @@
 
 // --- Example 1: Explicit types ---
 // TypeScript can infer, but being explicit is a good habit in strict mode.
-
 const username: string = 'john_doe';
 const age: number = 28;
 const isActive: boolean = true;
@@ -85,3 +84,5 @@ const experiencieYears: Array<number> = [2,5,8];
 
  console.log(`Skills: ${skills.join(", ")}`);
  console.log(`Experiences: ${experiencieYears.join(", ")} years`);
+
+ import "./generics/example";
