@@ -88,3 +88,80 @@ userRepo.save({ id: "2", name: "Jane Doe", email: "jane@email.com" });
 console.log("All users:", userRepo.findAll());
 console.log("Find by id:", userRepo.findById("1"));
 console.log("Not found:", userRepo.findById("99"));
+
+// ============================================================
+// GENERICS — CONSTRAINTS
+// ============================================================
+
+
+// --- Exercise 1: getProperty com keyof ---
+// keyof garante que a chave passada realmente existe no objeto.
+// Sem isso, você poderia passar qualquer string e só descobrir
+// o erro em tempo de execução.
+function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
+
+const user = { id: "1", name: "John Doe", email: "john@email.com" };
+
+const userName = getProperty(user, "name");   // ✅ string
+const userEmail = getProperty(user, "email"); // ✅ string
+
+// Tente descomentar a linha abaixo — TypeScript vai bloquear:
+// const invalid = getProperty(user, "phone"); // ❌ "phone" não existe em User
+
+console.log("Name:", userName);
+console.log("Email:", userEmail);
+
+
+// --- Exercise 2: merge com constraints ---
+// T e U precisam ser objetos — a constraint "extends object"
+// impede que você tente fazer merge de primitivos como string ou number.
+function merge<T extends object, U extends object>(a: T, b: U): T & U {
+  return { ...a, ...b };
+}
+
+const basicInfo = { id: "1", name: "John Doe" };
+const contactInfo = { email: "john@email.com", phone: "999-9999" };
+
+const fullProfile = merge(basicInfo, contactInfo);
+
+// TypeScript sabe exatamente quais campos existem no resultado:
+console.log("Merged profile:", fullProfile);
+console.log("Name:", fullProfile.name);   // ✅ vem de basicInfo
+console.log("Email:", fullProfile.email); // ✅ vem de contactInfo
+
+// Tente descomentar abaixo — primitivos não são permitidos:
+// merge("hello", "world"); // ❌ string não satisfaz "extends object"
+
+
+// --- Exercise 3: HasId constraint ---
+// Muito comum em repositórios reais — garantir que qualquer
+// entidade que passe pelo findById tenha um campo "id".
+interface HasId {
+  id: string;
+}
+
+// A constraint "T extends HasId" garante que T sempre tem "id"
+function findById<T extends HasId>(items: T[], id: string): T | null {
+  return items.find(item => item.id === id) ?? null;
+}
+
+// Funciona com qualquer entidade que tenha "id":
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+}
+
+const products: Product[] = [
+  { id: "p1", name: "Laptop", price: 999 },
+  { id: "p2", name: "Mouse", price: 49 },
+  { id: "p3", name: "Keyboard", price: 79 },
+];
+
+const found = findById(products, "p2");
+const notFound = findById(products, "p99");
+
+console.log("Found:", found);       // { id: "p2", name: "Mouse", price: 49 }
+console.log("Not found:", notFound); // null
